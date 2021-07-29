@@ -3,4 +3,5 @@
 
 技术： Taro + Vue
 
-灵感来源于TaroMVC项目：https://github.com/NervJS/TodoMVC/tree/vue
+模板来源于TaroMVC项目：https://github.com/NervJS/TodoMVC/tree/vue
+**在此基础上不断迭代更新**
