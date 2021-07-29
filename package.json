@@ -1,0 +1,36 @@
+{
+	"name": "3.0.8-vue-demo",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"watch": "taro build --type weapp --watch",
+		"build": "taro build --type weapp"
+	},
+	"author": "",
+	"license": "ISC",
+	"browserslist": [
+		"last 3 versions",
+		"Android >= 4.1",
+		"ios >= 8"
+	],
+	"dependencies": {
+		"@tarojs/cli": "3.0.8",
+		"@tarojs/components": "3.0.8",
+		"@tarojs/runtime": "3.0.8",
+		"@tarojs/taro": "3.0.8",
+		"vue": "2.6.12",
+		"vue-template-compiler": "2.6.12"
+	},
+	"devDependencies": {
+		"@babel/core": "7.11.4",
+		"@tarojs/mini-runner": "3.0.8",
+		"@tarojs/webpack-runner": "3.0.8",
+		"babel-preset-taro": "3.0.8",
+		"eslint-plugin-vue": "6.2.2",
+		"eslint-config-taro": "3.0.8",
+		"stylelint": "9.3.0",
+		"vue-loader": "15.9.3"
+	}
+}
