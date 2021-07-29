@@ -1,5 +1,5 @@
 {
-	"name": "3.0.8-vue-demo",
+	"name": "3.0.8-vue",
 	"version": "1.0.0",
 	"description": "",
 	"main": "app.js",
@@ -20,6 +20,7 @@
 		"@tarojs/components": "3.0.8",
 		"@tarojs/runtime": "3.0.8",
 		"@tarojs/taro": "3.0.8",
+		"taro-ui-vue": "0.0.9",
 		"vue": "2.6.12",
 		"vue-template-compiler": "2.6.12"
 	},

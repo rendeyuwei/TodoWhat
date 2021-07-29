@@ -1,6 +1,6 @@
 const config = {
-  projectName: 'next-vue-demo',
-  date: '2019-10-30',
+  projectName: 'Taro-vue',
+  date: '2021-7-29',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,
@@ -58,7 +58,8 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
+    esnextModules: ['taro-ui-vue']
   }
 }
 

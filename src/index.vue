@@ -4,46 +4,55 @@
       <view class='header-title-wrap'>
         <text class='title'>todos</text>
       </view>
-      <view class="filters">
-        <text @tap="setVisibility('all')" :class="{ selected: visibility == 'all', 'filters-link': true }">所有</text>
-        <text @tap="setVisibility('active')" :class="{ selected: visibility == 'active', 'filters-link': true }">未完成</text>
-        <text @tap="setVisibility('completed')" :class="{ selected: visibility == 'completed', 'filters-link': true }">已完成</text>
-      </view>
+      <!--      <view class="filters at-row">-->
+      <!--        <text @tap="setVisibility('all')"-->
+      <!--              :class="{ selected: visibility == 'all', 'filters-link': true , 'at-col':true}">所有-->
+      <!--        </text>-->
+      <!--        <text @tap="setVisibility('active')"-->
+      <!--              :class="{ selected: visibility == 'active', 'filters-link': true, 'at-col':true }">未完成-->
+      <!--        </text>-->
+      <!--        <text @tap="setVisibility('completed')"-->
+      <!--              :class="{ selected: visibility == 'completed', 'filters-link': true, 'at-col':true }">已完成-->
+      <!--        </text>-->
+      <!--      </view>-->
+      <tabs :set-visibility="setVisibility" :visible="visibility"></tabs>
       <view class='textinput-wrap'>
-        <text :class="{ 'textinput-wrap-icon': true, 'icon-all-done': allDone && todos.length }" @tap="allDone = !allDone">❯</text>
+        <text :class="{ 'textinput-wrap-icon': true, 'icon-all-done': allDone && todos.length }"
+              @tap="allDone = !allDone">❯
+        </text>
         <view class='textinput-wrap-input'>
           <input class="new-todo"
-          placeholder="What needs to be done?"
-          v-model="newTodo"
-          @confirm="addTodo">
+                 placeholder="记录你的待办任务"
+                 v-model="newTodo"
+                 @confirm="addTodo">
         </view>
       </view>
     </view>
     <view class="main" v-show="todos.length">
       <view class="todo-list">
         <view
-          v-for="todo in filteredTodos"
-          class="li"
-          :key="todo.id"
+            v-for="todo in filteredTodos"
+            class="li"
+            :key="todo.id"
         >
           <view :class="{ completed: todo.completed, editing: todo == editedTodo }">
             <view class="edit" v-if="todo == editedTodo">
               <input class="edit-todo" type="text"
-                v-model="todo.title"
-                v-todo-focus="todo == editedTodo"
-                @blur="doneEdit(todo)"
-                @confirm="doneEdit(todo)"
+                     v-model="todo.title"
+                     v-todo-focus="todo == editedTodo"
+                     @blur="doneEdit(todo)"
+                     @confirm="doneEdit(todo)"
               >
             </view>
             <view v-else class='toggle'>
               <text
-                :class="{ label: true, checked: todo.completed }"
-                @tap="todo.completed = !todo.completed"
+                  :class="{ label: true, checked: todo.completed }"
+                  @tap="todo.completed = !todo.completed"
               >
               </text>
               <todo-item
-                :todo="todo"
-                :edit="editTodo"
+                  :todo="todo"
+                  :edit="editTodo"
               />
               <text class='destroy' @tap="removeTodo(todo)"></text>
             </view>
@@ -53,7 +62,7 @@
     </view>
     <view class="footer" v-show="todos.length">
       <text class="todo-count">
-        <text class="strong">{{ remaining }}</text> {{ remaining | pluralize }} left
+        <text class="strong">{{ remaining }} </text>个任务未完成
       </text>
       <view class="clear-completed" @tap="removeCompleted" v-show="todos.length > remaining" type="">
         清除已完成的任务
@@ -61,13 +70,16 @@
     </view>
     <view class="info">
       <view class="p">双击来编辑任务</view>
-      <view class="p">Inspired from <text class="a">ToDoMVC</text></view>
+      <view class="p">Inspired from
+        <text class="a">ToDoMVC</text>
+      </view>
     </view>
   </view>
 </template>
 
 <script>
 import TodoItem from './todo-item.vue'
+import tabs from './components/tabs.vue'
 import './app.scss'
 
 // modified from: https://vuejs.org/v2/examples/todomvc.html
@@ -105,7 +117,8 @@ var filters = {
 
 export default {
   components: {
-    'todo-item': TodoItem
+    'todo-item': TodoItem,
+    'tabs': tabs
   },
   // app initial state
   data() {
@@ -175,7 +188,18 @@ export default {
     },
 
     removeTodo: function (todo) {
-      this.todos.splice(this.todos.indexOf(todo), 1)
+      wx.showModal({
+        title: '删除任务',
+        content: '确定删除该任务？',
+        success: (res) => {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            this.todos.splice(this.todos.indexOf(todo), 1)
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
     },
 
     editTodo: function (todo) {
