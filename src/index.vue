@@ -4,17 +4,6 @@
       <view class='header-title-wrap'>
         <text class='title'>todos</text>
       </view>
-      <!--      <view class="filters at-row">-->
-      <!--        <text @tap="setVisibility('all')"-->
-      <!--              :class="{ selected: visibility == 'all', 'filters-link': true , 'at-col':true}">所有-->
-      <!--        </text>-->
-      <!--        <text @tap="setVisibility('active')"-->
-      <!--              :class="{ selected: visibility == 'active', 'filters-link': true, 'at-col':true }">未完成-->
-      <!--        </text>-->
-      <!--        <text @tap="setVisibility('completed')"-->
-      <!--              :class="{ selected: visibility == 'completed', 'filters-link': true, 'at-col':true }">已完成-->
-      <!--        </text>-->
-      <!--      </view>-->
       <tabs :set-visibility="setVisibility" :visible="visibility"></tabs>
       <view class='textinput-wrap'>
         <text :class="{ 'textinput-wrap-icon': true, 'icon-all-done': allDone && todos.length }"
