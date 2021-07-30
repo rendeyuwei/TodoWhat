@@ -9,7 +9,6 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: `dist`,
-  baseLevel: 10,
   framework: 'vue',
   defineConstants: {
   },
@@ -20,11 +19,12 @@ const config = {
     }
   },
   mini: {
+    baseLevel: 10,
     postcss: {
       pxtransform: {
         enable: true,
         config: {
-
+          selectorBlackList: ['body']
         }
       },
       url: {
@@ -49,6 +49,7 @@ const config = {
       autoprefixer: {
         enable: true,
         config: {
+          selectorBlackList: ['body']
         }
       },
       cssModules: {
