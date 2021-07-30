@@ -1,6 +1,6 @@
 const config = {
-  projectName: 'next-vue-demo',
-  date: '2019-10-30',
+  projectName: 'Taro-vue',
+  date: '2021-7-29',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,
@@ -9,7 +9,6 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: `dist`,
-  baseLevel: 10,
   framework: 'vue',
   defineConstants: {
   },
@@ -20,11 +19,12 @@ const config = {
     }
   },
   mini: {
+    baseLevel: 10,
     postcss: {
       pxtransform: {
         enable: true,
         config: {
-
+          selectorBlackList: ['body']
         }
       },
       url: {
@@ -49,6 +49,7 @@ const config = {
       autoprefixer: {
         enable: true,
         config: {
+          selectorBlackList: ['body']
         }
       },
       cssModules: {
@@ -58,7 +59,8 @@ const config = {
           generateScopedName: '[name]__[local]___[hash:base64:5]'
         }
       }
-    }
+    },
+    esnextModules: ['taro-ui-vue']
   }
 }
 
