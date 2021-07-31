@@ -8,7 +8,7 @@
 
 .tabs-title {
   width: 100%;
-  height: 88rpx;
+  height: 88px;
   background: white;
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@
 
 .title-sel {
   color: #24272c;
-  font-size: 32rpx;
+  font-size: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,25 +25,25 @@
 
 .title-sel  .line-style{
   background: #fff;
-  height: 6rpx;
-  width: 40rpx;
+  height: 6px;
+  width: 40px;
   position: relative;
-  margin-top: 10rpx;
+  margin-top: 10px;
 }
 
 .title-sel-selected{
   color: #006bff;
-  font-size: 32rpx;
+  font-size: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .title-sel-selected .line-style{
   background: #006bff;
-  height: 6rpx;
-  width: 90rpx;
+  height: 6px;
+  width: 90px;
   position: relative;
-  margin-top: 10rpx;
+  margin-top: 10px;
 }
 
 .swiper {
@@ -54,11 +54,11 @@
 }
 
 .record-item {
-  margin-top: 10rpx;
+  margin-top: 10px;
   background-color: white;
-  padding-bottom: 5rpx;
-  padding-top: 5rpx;
-  font-size: 30rpx;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  font-size: 30px;
 }
 
 .name{
@@ -66,5 +66,5 @@
   justify-content: space-between;
   border: 1px solid #eee;
   padding: 2vh;
-  border-radius: 10rpx
+  border-radius: 10px
 }
