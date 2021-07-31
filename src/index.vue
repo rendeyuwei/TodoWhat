@@ -22,7 +22,7 @@
         <view
             v-for="todo in filteredTodos"
             class="li"
-            :key="todo.id"
+            :key="todo._id"
         >
           <view :class="{ completed: todo.completed, editing: todo == editedTodo }">
             <view class="edit" v-if="todo == editedTodo">
@@ -36,7 +36,7 @@
             <view v-else class='toggle'>
               <text
                   :class="{ label: true, checked: todo.completed }"
-                  @tap="todo.completed = !todo.completed"
+                  @tap="changeState(todo)"
               >
               </text>
               <todo-item
@@ -51,7 +51,8 @@
     </view>
     <view class="footer" v-show="todos.length">
       <text class="todo-count">
-        <text class="strong">{{ remaining }} </text>个任务未完成
+        <text class="strong">{{ remaining }}</text>
+        个任务未完成
       </text>
       <view class="clear-completed" @tap="removeCompleted" v-show="todos.length > remaining" type="">
         清除已完成的任务
@@ -63,13 +64,16 @@
         <text class="a">ToDoMVC</text>
       </view>
     </view>
+    <FabButton></FabButton>
   </view>
 </template>
 
 <script>
 import TodoItem from './todo-item.vue'
 import tabs from './components/tabs.vue'
+import FabButton from "./components/FabButton.vue";
 import './app.scss'
+import Taro from "@tarojs/taro";
 
 // modified from: https://vuejs.org/v2/examples/todomvc.html
 var STORAGE_KEY = 'todos-vuejs-2.0'
@@ -106,19 +110,25 @@ var filters = {
 
 export default {
   components: {
+    'FabButton': FabButton,
     'todo-item': TodoItem,
     'tabs': tabs
   },
   // app initial state
   data() {
     return {
-      todos: todoStorage.fetch(),
+      todos: [],
       newTodo: '',
       editedTodo: null,
-      visibility: 'all'
+      visibility: 'all',
+      db: Taro.cloud.database(),
+      openId: ''
     }
   },
 
+  created() {
+    this.getUserContext()
+  },
   // watch todos change for localStorage persistence
   watch: {
     todos: {
@@ -170,6 +180,16 @@ export default {
         title: value,
         completed: false
       })
+      // 将数据存储到云服务器中
+      this.db.collection('tasks').add({
+        data: {
+          title: value,
+          completed: false,
+          createTime: this.db.serverDate()
+        }
+      }).then(res => {
+        console.log(res)
+      })
     },
 
     setVisibility: function (v) {
@@ -183,7 +203,10 @@ export default {
         success: (res) => {
           if (res.confirm) {
             console.log('用户点击确定')
+            // console.log(this.todos[this.todos.indexOf(todo)]._id)
+            let task_id = this.todos[this.todos.indexOf(todo)]._id
             this.todos.splice(this.todos.indexOf(todo), 1)
+            this.db.collection('tasks').doc(task_id).remove()
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
@@ -205,6 +228,13 @@ export default {
       if (!todo.title) {
         this.removeTodo(todo)
       }
+      // 更新数据库中的任务
+      let task_id = this.todos[this.todos.indexOf(todo)]._id
+      this.db.collection('tasks').doc(task_id).update({
+        data:{
+          title: todo.title
+        }
+      })
     },
 
     cancelEdit: function (todo) {
@@ -214,6 +244,38 @@ export default {
 
     removeCompleted: function () {
       this.todos = filters.active(this.todos)
+    },
+
+    // 获取云服务器的数据
+    getData: async function (openId) {
+      const result = await this.db.collection('tasks').where({
+        _openid: openId
+      }).get()
+      for (let i = 0; i < result.data.length; i++) {
+        this.todos.push(result.data[i])
+      }
+      console.log(this.todos)
+    },
+
+    getUserContext: async function () {
+      await Taro.cloud.callFunction({
+        name: 'login',
+        data: {},
+      }).then(res => {
+        this.openId = res.result['openid']
+        this.getData(this.openId)
+      })
+    },
+
+    changeState: function (todo) {
+      todo.completed = !todo.completed
+      // 更新数据库中的任务
+      let task_id = this.todos[this.todos.indexOf(todo)]._id
+      this.db.collection('tasks').doc(task_id).update({
+        data:{
+          completed: todo.completed
+        }
+      })
     }
   },
 
