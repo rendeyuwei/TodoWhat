@@ -41,9 +41,9 @@
   },
   "miniprogramRoot": "dist/",
   "compileType": "miniprogram",
-  "libVersion": "2.9.4",
+  "libVersion": "2.11.2",
   "appid": "wxa62e15a64177f778",
-  "projectname": "TodoWhatDev",
+  "projectname": "Todo",
   "debugOptions": {
     "hidedInDevtools": []
   },

@@ -64,14 +64,12 @@
         <text class="a">ToDoMVC</text>
       </view>
     </view>
-    <FabButton></FabButton>
   </view>
 </template>
 
 <script>
 import TodoItem from './todo-item.vue'
 import tabs from './components/tabs.vue'
-import FabButton from "./components/FabButton.vue";
 import './app.scss'
 import Taro from "@tarojs/taro";
 
@@ -110,7 +108,6 @@ var filters = {
 
 export default {
   components: {
-    'FabButton': FabButton,
     'todo-item': TodoItem,
     'tabs': tabs
   },
