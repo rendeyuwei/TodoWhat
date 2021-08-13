@@ -34,16 +34,23 @@
               >
             </view>
             <view v-else class='toggle'>
-              <text
-                  :class="{ label: true, checked: todo.completed }"
-                  @tap="changeState(todo)"
-              >
-              </text>
-              <todo-item
-                  :todo="todo"
-                  :edit="editTodo"
-              />
-              <text class='destroy' @tap="removeTodo(todo)"></text>
+              <AtSwipeAction :options="options">
+                <view>
+                  <text
+                      :class="{ label: true, checked: todo.completed }"
+                      @tap="changeState(todo)"
+                  >
+                  </text>
+                  <todo-item
+                      :todo="todo"
+                      :edit="editTodo"
+                  />
+                  <text class='destroy' @tap="removeTodo(todo)"></text>
+                </view>
+
+              </AtSwipeAction>
+
+
             </view>
           </view>
         </view>
@@ -74,6 +81,7 @@ import tabs from './components/tabs.vue'
 import FabButton from "./components/FabButton.vue";
 import './app.scss'
 import Taro from "@tarojs/taro";
+import {AtSwipeAction} from 'taro-ui-vue'
 
 // modified from: https://vuejs.org/v2/examples/todomvc.html
 var STORAGE_KEY = 'todos-vuejs-2.0'
@@ -112,7 +120,8 @@ export default {
   components: {
     'FabButton': FabButton,
     'todo-item': TodoItem,
-    'tabs': tabs
+    'tabs': tabs,
+    'AtSwipeAction': AtSwipeAction,
   },
   // app initial state
   data() {
@@ -122,7 +131,20 @@ export default {
       editedTodo: null,
       visibility: 'all',
       db: Taro.cloud.database(),
-      openId: ''
+      openId: '',
+      options: [{
+        text: '编辑',
+        style: {
+          backgroundColor: '#6190E8'
+        }
+      },
+        {
+          text: '删除',
+          style: {
+            backgroundColor: '#FF4949'
+          }
+        }
+      ]
     }
   },
 
@@ -231,7 +253,7 @@ export default {
       // 更新数据库中的任务
       let task_id = this.todos[this.todos.indexOf(todo)]._id
       this.db.collection('tasks').doc(task_id).update({
-        data:{
+        data: {
           title: todo.title
         }
       })
@@ -272,7 +294,7 @@ export default {
       // 更新数据库中的任务
       let task_id = this.todos[this.todos.indexOf(todo)]._id
       this.db.collection('tasks').doc(task_id).update({
-        data:{
+        data: {
           completed: todo.completed
         }
       })
