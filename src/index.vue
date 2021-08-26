@@ -34,7 +34,7 @@
               >
             </view>
             <view v-else class='toggle'>
-              <AtSwipeAction :options="options">
+              <AtSwipeAction :options="options" :on-click="swiperRemove" auto-close>
                 <view>
                   <text
                       :class="{ label: true, checked: todo.completed }"
@@ -298,6 +298,10 @@ export default {
           completed: todo.completed
         }
       })
+    },
+
+    swiperRemove: function (todo) {
+      this.removeTodo(todo)
     }
   },
 
