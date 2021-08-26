@@ -132,12 +132,7 @@ export default {
       visibility: 'all',
       db: Taro.cloud.database(),
       openId: '',
-      options: [{
-        text: '编辑',
-        style: {
-          backgroundColor: '#6190E8'
-        }
-      },
+      options: [
         {
           text: '删除',
           style: {
