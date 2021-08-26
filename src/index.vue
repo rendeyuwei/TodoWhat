@@ -34,7 +34,7 @@
               >
             </view>
             <view v-else class='toggle'>
-              <AtSwipeAction :options="options" :on-click="swiperRemove" auto-close>
+              <AtSwipeAction :options="options" :on-click="function () {swiperRemove(todo)}" auto-close>
                 <view>
                   <text
                       :class="{ label: true, checked: todo.completed }"
